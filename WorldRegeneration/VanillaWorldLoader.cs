@@ -92,7 +92,7 @@ namespace WorldRegeneration
                         LoadWeightetPlates(reader);
                     }
                     ResetSection(0, 0, Main.maxTilesX, Main.maxTilesY);
-                    TSPlayer.All.SendInfoMessage("Successfully regenerated the world.");
+                    TSPlayer.All.SendInfoMessage("[i:4765] Successfully regenerated the world.");
                 }
             });
         }

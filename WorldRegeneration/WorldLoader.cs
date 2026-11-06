@@ -30,7 +30,7 @@ namespace WorldRegeneration
                     if (WorldRegeneration.Config.ResetWorldGenStatus)
                         ResetWorldData();
                     if (informPlayers)
-                        TSPlayer.All.SendInfoMessage("[i:4765] Successfully regenerated the world.");
+                        TSPlayer.All.SendInfoMessage("Successfully regenerated the world.");
                 }
             });
         }

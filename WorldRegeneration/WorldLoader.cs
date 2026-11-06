@@ -30,7 +30,7 @@ namespace WorldRegeneration
                     if (WorldRegeneration.Config.ResetWorldGenStatus)
                         ResetWorldData();
                     if (informPlayers)
-                        TSPlayer.All.SendInfoMessage("Successfully regenerated the world.");
+                        TSPlayer.All.SendInfoMessage("[i:4765] Successfully regenerated the world.");
                 }
             });
         }
@@ -102,7 +102,18 @@ namespace WorldRegeneration
             int num1 = 0;
             for (int i = 0; i < totalTileEntities; i++)
             {
-                TileEntity tileEntity = TileEntity.Read(reader);
+                TileEntity tileEntity = TileEntity.Read(reader, Terraria.IO.WorldFile._versionNumber);
+
+                int tx = tileEntity.Position.X;
+                int ty = tileEntity.Position.Y;
+                bool inProtectedRegion = TShock.Regions.InAreaRegion(tx, ty)
+                    .Any(r => r != null && r.Z >= WorldRegeneration.Config.MaxZRegion);
+
+                if (inProtectedRegion) //пропуск проверки в РГ
+                {
+                    continue;
+                }
+
                 for (int j = 0; j < 1000; j++)
                 {
                     TileEntity entityUsed;
@@ -121,6 +132,9 @@ namespace WorldRegeneration
                         TileEntity.ByPosition[tileEntity.Position] = tileEntity;
                         TileEntity.TileEntitiesNextID = j++;
                         num1++;
+
+                        //TSPlayer.All.SendTileRect((short)tx, (short)ty, 1, 1);
+
                         break;
                     }
                 }
@@ -232,9 +246,9 @@ namespace WorldRegeneration
 
         public static Chest ReadChest(this BinaryReader reader)
         {
-            Chest chest = new Chest(false);
-            chest.x = reader.ReadInt32();
-            chest.y = reader.ReadInt32();
+            Chest chest = new Chest();
+            //chest.x = reader.ReadInt32();
+            //chest.y = reader.ReadInt32();
             chest.name = "World Chest";
             for (int l = 0; l < 40; l++)
             {

@@ -124,7 +124,7 @@ namespace WorldRegeneration
             int currentID = 0;
             for (int i = 0; i < entityCount; i++)
             {
-                TileEntity tileEntity = TileEntity.Read(reader, false);
+                TileEntity tileEntity = TileEntity.Read(reader, Terraria.IO.WorldFile._versionNumber);
                 if (TShock.Regions.InAreaRegion(tileEntity.Position.X, tileEntity.Position.Y)
                                   .Any(r => r != null && r.Z >= WorldRegeneration.Config.MaxZRegion))
                     continue;
@@ -448,23 +448,23 @@ namespace WorldRegeneration
             int worldChestCapacity = (int)reader.ReadInt16();
             int chestCapacity;
             int overCapacity;
-            if (worldChestCapacity < Chest.maxItems)
+            if (worldChestCapacity < Chest.DefaultMaxItems)
             {
                 chestCapacity = worldChestCapacity;
                 overCapacity = 0;
             }
             else
             {
-                chestCapacity = Chest.maxItems;
-                overCapacity = worldChestCapacity - Chest.maxItems;
+                chestCapacity = Chest.DefaultMaxItems;
+                overCapacity = worldChestCapacity - Chest.DefaultMaxItems;
             }
             int i;
             int mainChestPos = 0;
             for (i = 0; i < chestCount; i++)
             {
-                Chest chest = new Chest(false);
-                chest.x = reader.ReadInt32();
-                chest.y = reader.ReadInt32();
+                Chest chest = new Chest();
+                //chest.x = reader.ReadInt32();
+                //chest.y = reader.ReadInt32();
                 chest.name = reader.ReadString();
                 for (int j = 0; j < chestCapacity; j++)
                 {

@@ -34,6 +34,7 @@ namespace WorldRegeneration
         public static void SaveWorld(CommandArgs args)
         {
             string schematicPath = GetWorldPath(args, "/saveworld [name]");
+            args.Player.SendInfoMessage("An attempt to preserve the current world...");
             Utilities.SaveWorldSection(0, 0, Main.maxTilesX, Main.maxTilesY, schematicPath);
         }
 
@@ -115,7 +116,7 @@ namespace WorldRegeneration
                         {
                             if (!PaginationTools.TryParsePageNumber(args.Parameters, pageParamIndex, args.Player, out pageNumber))
                             {
-                                args.Player.SendErrorMessage("Proper syntax: /search <option> <name>");
+                                args.Player.SendErrorMessage("Proper syntax: /worldregen <time/force/list>");
                                 return;
                             }
                         }

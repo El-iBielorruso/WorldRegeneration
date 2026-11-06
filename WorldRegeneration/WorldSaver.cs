@@ -133,7 +133,7 @@ namespace WorldRegeneration
                 if (item != null && item.stack > 0)
                 {
                     writer.Write((short)item.stack);
-                    writer.Write(item.netID);
+                    writer.Write(item.type);
                     writer.Write(item.prefix);
                 }
                 else
